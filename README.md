@@ -32,5 +32,26 @@ conda install -c conda-forge requests holoviews sqlalchemy sqlite cartopy --yes
 https://opensky-network.org/
 
 
-# See also:
+## Tests
+
+```sh
+pytest -v --cov=scripts/ --cov-report=term-missing
+```
+
+
+## Other
+You can freeze your environment with:
+
+```sh
+conda env export > environment.yml
+```
+
+To remove this conda environment, run:
+
+```sh
+conda env remove -n geopython-2018
+```
+
+
+## See also:
 https://anaconda.org/jbednar/opensky/notebook
