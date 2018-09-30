@@ -21,6 +21,11 @@ def content_json():
 def test_rest_api_schema_page_has_expected_number_of_fields(api_html):
     # this is a valid XPath selector in Chrome, but it doesn't work here.
     # fields = api_html.xpath('//div[@id="all-state-vectors"]/div[@id="response"]/div[position()=2]/table/tbody/tr')
+    # this is also a valid XPath selector in Chrome, but it doesn't work here.
+    # fields = api_html.xpath('//div[@id="all-state-vectors"]/div[@id="response"]/div[2]/table/tbody/tr')
+    # this is also a valid XPath selector in Chrome, but it doesn't work here.
+    # fields = api_html.xpath('//div[@id="all-state-vectors"]/div[@id="response"]/div[position()=last()]/table/tbody/tr')
+    # this is the only one that works both in Chrome and here.
     fields = api_html.xpath(
         '//div[@id="all-state-vectors"]//table/thead/tr/th[contains(text(), "Index")]/parent::*/parent::*/parent::*/tbody/tr'
     )

@@ -14,7 +14,7 @@ cache:
 install:
   - pip install pipenv
   - pip install codecov
-script: pipenv install --dev && pipenv run tests
+script: pipenv install pyproj && pipenv install --dev && pipenv run tests
 after_success:
   - codecov
 notifications:
