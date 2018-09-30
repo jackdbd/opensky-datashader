@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+sqlalchemy = "*"
+pandas = "*"
+requests = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+lxml = "*"
+black = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+printspam = "python -c \"print('I am a silly example, no one would need to do this')\""
+tests = "pytest -v --cov=scripts/ tests/test_make_db.py --cov-report=term-missing"
