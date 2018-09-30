@@ -7,6 +7,9 @@ name = "pypi"
 sqlalchemy = "*"
 pandas = "*"
 requests = "*"
+holoviews = {version = "*", extras = ["extras"]}
+cython = "*"
+cartopy = "*"
 
 [dev-packages]
 pytest = "*"
@@ -18,5 +21,6 @@ black = "*"
 python_version = "3.6"
 
 [scripts]
-printspam = "python -c \"print('I am a silly example, no one would need to do this')\""
-tests = "pytest -v --cov=scripts/ tests/test_make_db.py --cov-report=term-missing"
+mkdb = "python scripts/make_db.py"
+tests = "pytest -v --cov=scripts/ tests/ --cov-report=term-missing"
+lint = "black ."
