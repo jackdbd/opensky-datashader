@@ -12,6 +12,7 @@ def test_db_has_correct_name():
 def test_db_table_has_correct_name():
     assert exp_hdf5.TABLE_NAME == "flights"
 
+
 def test_script_has_flag_for_verbosity():
     namespace = exp_hdf5.parse_args([])
     assert namespace.verbose == False

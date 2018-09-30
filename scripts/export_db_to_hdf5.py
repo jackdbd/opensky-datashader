@@ -27,10 +27,36 @@ def transform_coords(df):
     return df
 
 
+def find_a_name_for_this_function(conn):
+    sql = """
+    SELECT
+      f.icao24,
+      MIN(f.time_position) AS ts_min,
+      MAX(f.time_position) AS ts_max,
+      f.longitude,
+      f.latitude,
+      f.geo_altitude,
+      f.baro_altitude,
+      f.velocity,
+      COUNT(*) AS num
+    FROM flights AS f
+    WHERE
+      f.time_position IS NOT NULL AND
+	  f.on_ground IS 0
+    GROUP BY f.icao24
+    HAVING
+      num > 1 AND
+      (ts_max - ts_min) > 0;
+    """
+    df = transform_coords(pd.read_sql(sql, conn))
+    return df
+
+
 def split_flights(dataset):
     # TODO: something here fails
     df = dataset.data.copy().reset_index(drop=True)
-    df = df[np.logical_not(df.time_position.isnull())]
+    df = df[~df.time_position.isnull()]
+    # df = df[np.logical_not(df.time_position.isnull())]
     empty = df[:1].copy()
     empty.loc[0, :] = (np.NaN,) * 14
     paths = []
@@ -64,8 +90,10 @@ def main():  # pragma: no cover
     SELECT * from flights;
     """
     df = transform_coords(pd.read_sql(sql, engine))
-    dataset = hv.Dataset(df)
-    flightpaths = split_flights(dataset)
+    ddf = find_a_name_for_this_function(engine)
+    print(ddf.shape)
+    # dataset = hv.Dataset(df)
+    # flightpaths = split_flights(dataset)
     # Remove unused columns
     # flightpaths = flightpaths[['longitude', 'latitude', 'origin', 'on_ground', 'ascending','velocity']]
     # flightpaths['origin'] = flightpaths.origin.astype(str)
