@@ -53,19 +53,21 @@ def find_a_name_for_this_function(conn):
 
 
 def split_flights(dataset):
+    # num_datapoints = 21
+    num_datapoints = 1
     # TODO: something here fails
     df = dataset.data.copy().reset_index(drop=True)
     df = df[~df.time_position.isnull()]
     # df = df[np.logical_not(df.time_position.isnull())]
     empty = df[:1].copy()
-    empty.loc[0, :] = (np.NaN,) * 14
+    empty.loc[0, :] = (np.NaN,) * df.shape[1]
     paths = []
     for gid, group in df.groupby("icao24"):
         times = group.time_position
         for split_df in np.split(
             group.reset_index(drop=True), np.where(times.diff() > 600)[0]
         ):
-            if len(split_df) > 20:
+            if len(split_df) >= num_datapoints:
                 paths += [split_df, empty]
     split = pd.concat(paths, ignore_index=True)
     split["ascending"] = split.vertical_rate > 0

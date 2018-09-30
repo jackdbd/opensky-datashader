@@ -56,7 +56,7 @@ def test_split_flights_raises_AttributeError():
         exp_hdf5.split_flights(dataset)
 
 
-def test_split_flights_raises_ValueError():
+def test_split_flights_raises_KeyError_when_icao24_column_is_missing():
     d = {
         "latitude": [51.509865],
         "longitude": [-0.118092],
@@ -65,5 +65,29 @@ def test_split_flights_raises_ValueError():
     df_in = pd.DataFrame(d)
     df = exp_hdf5.transform_coords(df_in)
     dataset = hv.Dataset(df)
-    with pytest.raises(ValueError):
+    with pytest.raises(KeyError):
         exp_hdf5.split_flights(dataset)
+
+
+def test_split_flights_returns_one_column_more_of_input_dataframe():
+    d = {
+        "icao24": ["abc", "abc"],
+        "latitude": [51.509865, 48.864716],
+        "longitude": [-0.118092, 2.349014],
+        "time_position": [1538239469.0, 1538249469.0],
+        "vertical_rate": [100, 150],
+    }
+    df0 = pd.DataFrame(d)
+    df1 = exp_hdf5.transform_coords(df0)
+    dataset = hv.Dataset(df1)
+    df2 = exp_hdf5.split_flights(dataset)
+    expected_columns = [
+        "icao24",
+        "latitude",
+        "longitude",
+        "time_position",
+        "vertical_rate",
+        "ascending",
+    ]
+    assert df0.shape[1] + 1 == df2.shape[1]
+    assert all([a == b for a, b in zip(df2.columns, expected_columns)])
