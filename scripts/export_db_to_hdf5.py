@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import argparse
 import numpy as np
@@ -45,18 +46,18 @@ def split_flights(dataset):
     return split
 
 
-def parse_args():
+def parse_args(args):
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="If set, increase output verbosity"
     )
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
-def main():
-    args = parse_args()
+def main():  # pragma: no cover
+    args = parse_args(sys.argv[1:])
     t0 = time.time()
     engine = sa.create_engine(f"sqlite:///{DB_FILEPATH}")
     sql = """

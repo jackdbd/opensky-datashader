@@ -12,8 +12,20 @@ def test_db_has_correct_name():
 def test_db_table_has_correct_name():
     assert exp_hdf5.TABLE_NAME == "flights"
 
+def test_script_has_flag_for_verbosity():
+    namespace = exp_hdf5.parse_args([])
+    assert namespace.verbose == False
+    namespace = exp_hdf5.parse_args(["-v"])
+    assert namespace.verbose == True
 
-# @pytest.mark.skip('TODO')
+
+def test_script_with_unsupported_flags_exits_with_SystemExit_code_2():
+    with pytest.raises(SystemExit) as e:
+        exp_hdf5.parse_args(["-d"])
+    assert e.type == SystemExit
+    assert e.value.code == 2
+
+
 def test_transform_coords_raises_KeyError_when_latitude_is_missing():
     df = pd.DataFrame({"some_column": ["value0", "value1"]})
     with pytest.raises(KeyError):

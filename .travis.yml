@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+cache:
+  pip: true
+install:
+  - pip install pipenv
+  - pip install codecov
+script: pipenv install --dev && pipenv run tests
+after_success:
+  - codecov
+notifications:
+    email:
+        on_success: change
+        on_failure: always
