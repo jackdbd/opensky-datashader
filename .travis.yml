@@ -1,3 +1,11 @@
+sudo: required  # see https://docs.travis-ci.com/user/ci-environment/#Virtualization-environments
+dist: trusty
+branches:
+  only:
+    - master
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install proj-bin -y
 language: python
 python:
   - "3.6"
