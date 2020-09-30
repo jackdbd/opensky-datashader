@@ -55,14 +55,13 @@ def find_a_name_for_this_function(conn):
 def split_flights(dataset):
     # num_datapoints = 21
     num_datapoints = 1
-    # TODO: something here fails
     df = dataset.data.copy().reset_index(drop=True)
     df = df[~df.time_position.isnull()]
     # df = df[np.logical_not(df.time_position.isnull())]
     empty = df[:1].copy()
     empty.loc[0, :] = (np.NaN,) * df.shape[1]
     paths = []
-    for gid, group in df.groupby("icao24"):
+    for _gid, group in df.groupby("icao24"):
         times = group.time_position
         for split_df in np.split(
             group.reset_index(drop=True), np.where(times.diff() > 600)[0]
@@ -85,7 +84,7 @@ def parse_args(args):
 
 
 def main():  # pragma: no cover
-    args = parse_args(sys.argv[1:])
+    parse_args(sys.argv[1:])
     t0 = time.time()
     engine = sa.create_engine(f"sqlite:///{DB_FILEPATH}")
     sql = """
@@ -94,13 +93,14 @@ def main():  # pragma: no cover
     df = transform_coords(pd.read_sql(sql, engine))
     ddf = find_a_name_for_this_function(engine)
     print(ddf.shape)
-    # dataset = hv.Dataset(df)
-    # flightpaths = split_flights(dataset)
-    # Remove unused columns
-    # flightpaths = flightpaths[['longitude', 'latitude', 'origin', 'on_ground', 'ascending','velocity']]
-    # flightpaths['origin'] = flightpaths.origin.astype(str)
 
-    # flightpaths.to_hdf(HDF5_PATH, 'flights')
+    dataset = hv.Dataset(df)
+    print("=== dataset ===", dataset)
+    flightpaths = split_flights(dataset)
+    # Remove unused columns
+    flightpaths = flightpaths[['longitude', 'latitude', 'origin_country', 'on_ground', 'ascending','velocity']]
+    flightpaths['origin_country'] = flightpaths.origin_country.astype(str)
+    flightpaths.to_hdf(HDF5_PATH, 'flights')
 
     t1 = time.time()
     print(f"Done in {(t1 - t0):.2f} seconds")

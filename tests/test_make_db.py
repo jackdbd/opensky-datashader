@@ -33,6 +33,10 @@ def test_rest_api_schema_page_has_expected_number_of_fields(api_html):
 
 
 def test_rest_api_schema_page_has_expected_fields(api_html):
+    """Check that the OpenSky REST API has not changed since last time.
+    You can test an XPath expression directly in Chrome DevTools:
+    $x('xpath-expression-here')
+    """
     fields = api_html.xpath(
         '//div[@id="all-state-vectors"]//table/thead/tr/th[contains(text(), "Index")]/parent::*/parent::*/parent::*/tbody/tr/td/em/text()'
     )

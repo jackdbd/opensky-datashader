@@ -13,3 +13,7 @@ __pycache__/
 .coverage
 htmlcov/
 assets/
+
+# data
+data/*
+!data/.gitkeep

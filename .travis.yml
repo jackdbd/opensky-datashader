@@ -1,18 +1,21 @@
-sudo: false
+os: linux
+dist: xenial
 branches:
   only:
     - master
+before_install:
+  - sudo apt-get update --quiet
+  - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 language: python
 python:
-  - "3.6"
-cache:
-  pip: true
+  - "3.8"
 install:
-  - pip install pipenv
-  - pip install codecov
-script: pipenv install pyproj --skip-lock && pipenv install --skip-lock --dev && pipenv run tests
+  - $HOME/.poetry/bin/poetry install -v
+  - $HOME/.poetry/bin/poetry add codecov
+script:
+  - $HOME/.poetry/bin/poetry run poe test
 after_success:
-  - codecov
+  - $HOME/.poetry/bin/poetry run python codecov
 notifications:
     email:
         on_success: change

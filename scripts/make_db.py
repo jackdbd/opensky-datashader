@@ -14,6 +14,7 @@ import sqlalchemy as sa
 import argparse
 
 # TODO: make this script a cron job and run it on Amazon Lambda
+# TODO: remove SQLAlchemy
 
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -31,13 +32,13 @@ REST_API_SCHEMA_FIELDS = [
     "last_contact",
     "longitude",
     "latitude",
-    "geo_altitude",
+    "baro_altitude",
     "on_ground",
     "velocity",
     "true_track",
     "vertical_rate",
     "sensors",
-    "baro_altitude",
+    "geo_altitude",
     "squawk",
     "spi",
     "position_source",
@@ -61,7 +62,7 @@ def make_df(content):
 
 
 def main():  # pragma: no cover
-    args = parse_args(sys.argv[1:])
+    parse_args(sys.argv[1:])
     t0 = time.time()
     engine = sa.create_engine(f"sqlite:///{DB_FILEPATH}")
     req = requests.get(API_URL)
