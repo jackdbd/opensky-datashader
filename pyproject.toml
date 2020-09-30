@@ -20,12 +20,12 @@ tables = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
+codecov = "^2.1.9"
 poethepoet = "^0.8.0"
 pylint = "^2.6.0"
 pytest = "^6.1.0"
 pytest-cov = "^2.10.1"
 lxml = "^4.5.2"
-codecov = "^2.1.9"
 
 [tool.poe.tasks]
 codecov = "codecov --verbose"

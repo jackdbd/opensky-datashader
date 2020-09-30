@@ -13,7 +13,6 @@ python:
   - "3.8"
 install:
   - $HOME/.poetry/bin/poetry install -v
-  - $HOME/.poetry/bin/poetry add --dev codecov
 script:
   - $HOME/.poetry/bin/poetry run poe test
 after_success:
