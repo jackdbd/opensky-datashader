@@ -25,8 +25,10 @@ pylint = "^2.6.0"
 pytest = "^6.1.0"
 pytest-cov = "^2.10.1"
 lxml = "^4.5.2"
+codecov = "^2.1.9"
 
 [tool.poe.tasks]
+codecov = "codecov --verbose"
 coverage = "python -m http.server --directory htmlcov"
 export_db = "python scripts/export_db_to_hdf5.py"
 format = "poetry run black ."
