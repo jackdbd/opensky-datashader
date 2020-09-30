@@ -14,9 +14,9 @@ python:
 install:
   - $HOME/.poetry/bin/poetry install -v
 script:
-  - $HOME/.poetry/bin/poetry run poe test
+  - $HOME/.poetry/bin/poetry run pytest --verbose --cov=scripts/ tests/
 after_success:
-  - $HOME/.poetry/bin/poetry run poe codecov
+  - codecov
 notifications:
     email:
         on_success: change
