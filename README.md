@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/jackdbd/opensky-datashader.svg?branch=master)](https://travis-ci.org/jackdbd/opensky-datashader) [![Code Coverage](https://codecov.io/gh/jackdbd/opensky-datashader/coverage.svg)](https://codecov.io/gh/jackdbd/opensky-datashader) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black) 
 
-Snippets that show how to use the OpenSky REST API.
+Snippets that show how to use the [OpenSky](https://opensky-network.org/) REST API.
 
 ## Installation
 
@@ -37,15 +37,17 @@ poetry install
 pipenv run tests
 ```
 
+## Troubleshooting
 
-## Data
-https://opensky-network.org/
+[cartopy](https://github.com/SciTools/cartopy) depends on some C++ libraries that you need to install. See [here](https://scitools.org.uk/cartopy/docs/latest/installing.html#installing) for details.
 
-
-## See also:
-https://anaconda.org/jbednar/opensky/notebook
+In my case I had to install these packages.
 
 ```shell
 sudo apt-get install libgeos-dev
 sudo apt-get install libproj-dev
 ```
+
+## See also
+
+https://anaconda.org/jbednar/opensky/notebook

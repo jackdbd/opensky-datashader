@@ -3,8 +3,10 @@ dist: xenial
 branches:
   only:
     - master
+# Update list of available packages and install cartopy C++ dependencies
 before_install:
   - sudo apt-get update --quiet
+  - sudo apt-get install libgeos-dev libproj-dev
   - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 language: python
 python:
